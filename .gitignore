@@ -1,2 +1,14 @@
-*.class
-*.log
+# Emacs specific
+
+.ensime
+.ensime_cache
+*#
+
+
+target/
+.idea/
+project/project/
+project/target/
+releases/
+*.iml
+*.swp
