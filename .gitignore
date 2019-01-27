@@ -3,6 +3,8 @@
 .ensime
 .ensime_cache
 *#
+.bloop/
+project/.bloop/
 
 
 target/
