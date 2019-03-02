@@ -24,6 +24,9 @@ lazy val `nezam-core-model` = project.
     version := "1.0.0",
     name := "nezam-core-model",
     libraryDependencies ++= Seq(  
-      "org.scalatest" %% "scalatest" % "3.0.1" % "test"
+      "org.scalatest" %% "scalatest" % "3.0.1" % "test",
+      "com.typesafe.akka" %% "akka-actor" % "2.5.21"
     )
   )
+
+
