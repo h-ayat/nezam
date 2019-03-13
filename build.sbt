@@ -23,7 +23,8 @@ lazy val `nezam-core-model` = project.
   settings(
     version := "1.0.0",
     name := "nezam-core-model",
-    libraryDependencies ++= Seq(  
+    libraryDependencies ++= Seq(
+      "org.json4s" %% "json4s-jackson" % "3.6.5",
       "org.scalatest" %% "scalatest" % "3.0.1" % "test",
       "com.typesafe.akka" %% "akka-actor" % "2.5.21"
     )

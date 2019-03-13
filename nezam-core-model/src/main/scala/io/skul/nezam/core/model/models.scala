@@ -8,11 +8,19 @@ import scala.concurrent.Future
   * @author S.Hosein Ayat
   */
 
+trait EnumHelper[T] {
+  def all: List[T]
+
+  lazy val names: Set[String] = all.map(_.toString).toSet
+
+  lazy val nameMap: Map[String, T] = all.map(t => t.toString -> t).toMap
+}
+
 sealed trait TaskPriority {
   def value: Int
 }
 
-object TaskPriority {
+object TaskPriority extends EnumHelper[TaskPriority] {
 
   case object Low extends TaskPriority {
     override val value = 0
@@ -30,11 +38,13 @@ object TaskPriority {
     override val value = 3
   }
 
+  val all: List[TaskPriority] = Low :: Medium :: High :: Critical :: Nil
+
 }
 
 sealed trait TaskState
 
-object TaskState {
+object TaskState extends EnumHelper[TaskState] {
 
   case object BackLog extends TaskState
 
@@ -50,6 +60,7 @@ object TaskState {
 
   case object Finished extends TaskState
 
+  val all: List[TaskState] = BackLog :: Ready :: Dev :: Review :: Test :: Deploy :: Finished :: Nil
 }
 
 
@@ -69,14 +80,22 @@ case class IssueCreatedEvent(issueId: String, title: String, issuerId: String, d
 
 case class IssueGroomedEvent(issueId: String, groomerId: String, date: Long) extends IssueEvent
 
+case class ChertEvent(issueId: String, date: Long) extends IssueEvent
+
+case class Chert2Event(issueId: String, title: String, date: Long) extends IssueEvent
+
 
 trait Command {
   def userId: String
 }
 
+trait IssueCommand extends Command {
+  def issueId: String
+}
+
 case class CreateIssueCommand(title: String, userId: String) extends Command
 
-case class GroomIssueCommand(issueId: String, userId: String) extends Command
+case class GroomIssueCommand(issueId: String, userId: String) extends IssueCommand
 
 
 class IssueCommandEndpoint extends Actor {
